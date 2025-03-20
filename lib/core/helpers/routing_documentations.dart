@@ -8,14 +8,6 @@ class AppRoutes {
   static const String main = '/';
   static const String login = '/login';
   static const String home = '/home';
-  static const String detailResto = '/detail_resto';
-  static const String search = '/search';
-  static const String review = '/review';
-  static const String favorite = '/favorite';
-  static const String detailProfile = '/detail_profile';
-  static const String myOrder = '/my_order';
-  static const String changeTheme = '/change_theme';
-  static const String helps = '/helps';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -27,9 +19,11 @@ class AppRoutes {
         );
 
       case login:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
+        return MaterialPageRoute(builder: (_) =>  LoginScreen());
       case home:
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        return MaterialPageRoute(builder: (_) =>  HomeScreen());
+
+     
 
       default:
         return _errorRoute();
@@ -37,6 +31,8 @@ class AppRoutes {
   }
 
   static Route<dynamic> _errorRoute() {
-    return MaterialPageRoute(builder: (_) => const NotFoundScreen());
+    return MaterialPageRoute(
+      builder: (_) => const NotFoundScreen(),
+    );
   }
 }
