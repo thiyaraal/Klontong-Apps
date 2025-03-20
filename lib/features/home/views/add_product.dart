@@ -1,96 +1,89 @@
 import 'package:flutter/material.dart';
-import 'package:kelontong_app/features/products/models/all_products_model.dart';
+import 'package:kelontong_app/features/home/view_models/add_product_provider.dart';
+import 'package:provider/provider.dart';
 
-class AddProductForm extends StatefulWidget {
-  final Function(AllProductsModels) onSubmit;
-
-  const AddProductForm({super.key, required this.onSubmit});
-
-  @override
-  _AddProductFormState createState() => _AddProductFormState();
-}
-
-class _AddProductFormState extends State<AddProductForm> {
-  final _formKey = GlobalKey<FormState>();
-
-  final _nameController = TextEditingController();
-  final _skuController = TextEditingController();
-  final _categoryController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _imageController = TextEditingController();
-  final _hargaController = TextEditingController();
-  final _idController = TextEditingController();
+class AddProductForm extends StatelessWidget {
+  const AddProductForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Add Product'),
-      content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
+    final addProv = Provider.of<AddProductProvider>(context);
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(labelText: 'Product Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter product name';
-                  }
-                  return null;
-                },
+              const SizedBox(height: 20),
+              Text('Add Product', style: TextStyle(fontSize: 20)),
+              const SizedBox(height: 20),
+              TextField(
+                controller: addProv.idController,
+                decoration: InputDecoration(labelText: ' ID'),
+                keyboardType: TextInputType.number,
               ),
-              TextFormField(
-                controller: _skuController,
+              TextField(
+                controller: addProv.categoryIdController,
+                decoration: InputDecoration(labelText: 'Category ID'),
+                keyboardType: TextInputType.number,
+              ),
+              TextField(
+                controller: addProv.categoryNameController,
+                decoration: InputDecoration(labelText: 'Category Name'),
+              ),
+              TextField(
+                controller: addProv.skuController,
                 decoration: InputDecoration(labelText: 'SKU'),
               ),
-              TextFormField(
-                controller: _categoryController,
-                decoration: InputDecoration(labelText: 'Category'),
+              TextField(
+                controller: addProv.nameController,
+                decoration: InputDecoration(labelText: 'Product Name'),
               ),
-              TextFormField(
-                controller: _descriptionController,
+              TextField(
+                controller: addProv.descriptionController,
                 decoration: InputDecoration(labelText: 'Description'),
               ),
-              TextFormField(
-                controller: _imageController,
+              TextField(
+                controller: addProv.weightController,
+                decoration: InputDecoration(labelText: 'Weight'),
+                keyboardType: TextInputType.number,
+              ),
+              TextField(
+                controller: addProv.widthController,
+                decoration: InputDecoration(labelText: 'Width'),
+                keyboardType: TextInputType.number,
+              ),
+              TextField(
+                controller: addProv.heightController,
+                decoration: InputDecoration(labelText: 'Height'),
+                keyboardType: TextInputType.number,
+              ),
+
+              TextField(
+                controller: addProv.lengthController,
+                decoration: InputDecoration(labelText: 'Length'),
+                keyboardType: TextInputType.number,
+              ),
+              TextField(
+                controller: addProv.imageController,
                 decoration: InputDecoration(labelText: 'Image URL'),
               ),
-              TextFormField(
-                controller: _hargaController,
+              TextField(
+                controller: addProv.priceController,
                 decoration: InputDecoration(labelText: 'Price'),
                 keyboardType: TextInputType.number,
               ),
-              TextFormField(
-                controller: _idController,
-                decoration: InputDecoration(labelText: 'Product ID'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    final newProduct = AllProductsModels(
-                      id: int.parse(_idController.text).toString(),
-
-                      categoryId: 14,
-                      categoryName: 'Snacks',
-                      sku: _skuController.text,
-                      name: _nameController.text,
-                      description: _descriptionController.text,
-                      image: _imageController.text,
-                      harga: int.parse(_hargaController.text),
-                      weight: 500,
-                      width: 5,
-                      length: 5,
-                      height: 5,
-                    );
-
-                    widget.onSubmit(newProduct);
-                  }
-                },
-                child: Text('Submit'),
-              ),
+              SizedBox(height: 20),
+              addProv.isLoading
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                    onPressed: () {
+                      addProv.addProduct(context);
+                    },
+                    child: Text('Submit'),
+                  ),
             ],
           ),
         ),

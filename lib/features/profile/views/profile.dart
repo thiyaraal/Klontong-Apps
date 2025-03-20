@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kelontong_app/features/profile/view_models/profile_provider.dart';
+import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
@@ -17,7 +14,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             backgroundColor: Colors.white,
             title: const Text('Profile', style: TextStyle(color: Colors.black)),
             iconTheme: const IconThemeData(color: Colors.black),
-            elevation: 0,
+            elevation: 1,
           ),
           body: Center(
             child: Column(
