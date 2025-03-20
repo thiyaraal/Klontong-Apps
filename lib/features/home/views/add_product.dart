@@ -1,89 +1,96 @@
 import 'package:flutter/material.dart';
-import 'package:kelontong_app/features/home/view_models/add_product_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:kelontong_app/features/products/models/all_products_model.dart';
 
-class AddProductForm extends StatelessWidget {
-  const AddProductForm({super.key});
+class AddProductForm extends StatefulWidget {
+  final Function(AllProductsModels) onSubmit;
+
+  const AddProductForm({super.key, required this.onSubmit});
+
+  @override
+  _AddProductFormState createState() => _AddProductFormState();
+}
+
+class _AddProductFormState extends State<AddProductForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _nameController = TextEditingController();
+  final _skuController = TextEditingController();
+  final _categoryController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _imageController = TextEditingController();
+  final _hargaController = TextEditingController();
+  final _idController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final addProv = Provider.of<AddProductProvider>(context);
-
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
+    return AlertDialog(
+      title: Text('Add Product'),
+      content: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
-              Text('Add Product', style: TextStyle(fontSize: 20)),
-              const SizedBox(height: 20),
-              TextField(
-                controller: addProv.idController,
-                decoration: InputDecoration(labelText: ' ID'),
-                keyboardType: TextInputType.number,
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Product Name'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter product name';
+                  }
+                  return null;
+                },
               ),
-              TextField(
-                controller: addProv.categoryIdController,
-                decoration: InputDecoration(labelText: 'Category ID'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: addProv.categoryNameController,
-                decoration: InputDecoration(labelText: 'Category Name'),
-              ),
-              TextField(
-                controller: addProv.skuController,
+              TextFormField(
+                controller: _skuController,
                 decoration: InputDecoration(labelText: 'SKU'),
               ),
-              TextField(
-                controller: addProv.nameController,
-                decoration: InputDecoration(labelText: 'Product Name'),
+              TextFormField(
+                controller: _categoryController,
+                decoration: InputDecoration(labelText: 'Category'),
               ),
-              TextField(
-                controller: addProv.descriptionController,
+              TextFormField(
+                controller: _descriptionController,
                 decoration: InputDecoration(labelText: 'Description'),
               ),
-              TextField(
-                controller: addProv.weightController,
-                decoration: InputDecoration(labelText: 'Weight'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: addProv.widthController,
-                decoration: InputDecoration(labelText: 'Width'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: addProv.heightController,
-                decoration: InputDecoration(labelText: 'Height'),
-                keyboardType: TextInputType.number,
-              ),
-
-              TextField(
-                controller: addProv.lengthController,
-                decoration: InputDecoration(labelText: 'Length'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: addProv.imageController,
+              TextFormField(
+                controller: _imageController,
                 decoration: InputDecoration(labelText: 'Image URL'),
               ),
-              TextField(
-                controller: addProv.priceController,
+              TextFormField(
+                controller: _hargaController,
                 decoration: InputDecoration(labelText: 'Price'),
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 20),
-              addProv.isLoading
-                  ? CircularProgressIndicator()
-                  : ElevatedButton(
-                    onPressed: () {
-                      addProv.addProduct(context);
-                    },
-                    child: Text('Submit'),
-                  ),
+              TextFormField(
+                controller: _idController,
+                decoration: InputDecoration(labelText: 'Product ID'),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    final newProduct = AllProductsModels(
+                      id: int.parse(_idController.text).toString(),
+
+                      categoryId: 14,
+                      categoryName: 'Snacks',
+                      sku: _skuController.text,
+                      name: _nameController.text,
+                      description: _descriptionController.text,
+                      image: _imageController.text,
+                      harga: int.parse(_hargaController.text),
+                      weight: 500,
+                      width: 5,
+                      length: 5,
+                      height: 5,
+                    );
+
+                    widget.onSubmit(newProduct);
+                  }
+                },
+                child: Text('Submit'),
+              ),
             ],
           ),
         ),

@@ -6,34 +6,40 @@ import 'package:kelontong_app/features/products/services/get_products_service.da
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late Future<List<AllProductsModels>> _products;
+
   @override
   void initState() {
     super.initState();
-    // Fetch products after the first frame is built.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<SearchProvider>(context, listen: false).fetchProducts();
-    });
+    _products = GetProductsService().getProducts();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('Kelontong App'),
-      ),
-      body: Consumer<SearchProvider>(
-        builder: (context, searchProvider, child) {
-          if (searchProvider.products.isEmpty) {
+      appBar: AppBar(backgroundColor: Colors.white, title: Text('Kelontong App')),
+      body: FutureBuilder<List<AllProductsModels>>(
+        future: _products,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text('No products found.'));
           }
+
+          final products = snapshot.data!;
+          Provider.of<ProductProvider>(
+            context,
+            listen: false,
+          ).setProducts(products);
+
           return Padding(
             padding: const EdgeInsets.all(12.0),
             child: ProductTable(),
