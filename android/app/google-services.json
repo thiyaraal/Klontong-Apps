@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "624201421340",
+    "project_id": "klontong-apps-cf7c2",
+    "storage_bucket": "klontong-apps-cf7c2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624201421340:android:4b7e153835a42210f8c5d9",
+        "android_client_info": {
+          "package_name": "com.example.kelontong_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnEYIVGKTBf9pyv3Ve9B6698FA0gFiZgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

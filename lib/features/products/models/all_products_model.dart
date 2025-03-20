@@ -22,7 +22,6 @@ class AllProductsModels {
     int? height;
     String? image;
     int? harga;
-    
 
     AllProductsModels({
         this.id,
