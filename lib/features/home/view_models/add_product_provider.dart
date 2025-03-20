@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kelontong_app/features/home/models/add_product.dart';
 import 'package:kelontong_app/features/home/services/add_product_services.dart';
-import 'package:kelontong_app/features/home/view_models/product_provider.dart';
 import 'package:kelontong_app/features/home/view_models/search_provider.dart';
 import 'package:provider/provider.dart';
 

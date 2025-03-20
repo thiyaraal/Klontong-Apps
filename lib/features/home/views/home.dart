@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kelontong_app/features/home/view_models/search_provider.dart';
 import 'package:kelontong_app/features/home/views/product_table.dart';
-import 'package:kelontong_app/features/products/models/all_products_model.dart';
-import 'package:kelontong_app/features/products/services/get_products_service.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch products after the first frame is built.
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<SearchProvider>(context, listen: false).fetchProducts();
     });
