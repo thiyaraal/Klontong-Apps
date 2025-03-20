@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kelontong_app/features/home/views/change_product.dart';
 import 'package:kelontong_app/features/products/models/all_products_model.dart';
 import 'package:kelontong_app/features/products/views/detail_products.dart';
 
@@ -13,10 +14,25 @@ class ProductDataSource extends DataTableSource {
     final product = products[index];
     return DataRow(
       cells: [
-        DataCell(Text(product.name ?? 'Unknown Product')),
+         DataCell(
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditProductPage(product: product),
+                ),
+              );
+            },
+          ),
+        ),
+        DataCell(Text(product.categoryId.toString())),
         DataCell(Text(product.categoryName.toString().split('.').last)),
         DataCell(Text(product.sku ?? 'N/A')),
-        DataCell(Text(product.id.toString())),
+        DataCell(Text(product.name ?? 'Unknown Product')),
+        DataCell(Text(product.harga.toString())),
       ],
 
       onLongPress:

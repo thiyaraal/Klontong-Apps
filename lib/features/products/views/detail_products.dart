@@ -22,7 +22,7 @@ class ProductDetailPage extends StatelessWidget {
                   onPressed: () => Navigator.of(context).pop(),
                 ),
                 Text(
-                  "${product.categoryName.toString().split('.').last}",
+                  product.categoryName.toString().split('.').last,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ],
