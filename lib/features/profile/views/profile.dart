@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             title: const Text('Profile', style: TextStyle(color: Colors.black)),
             iconTheme: const IconThemeData(color: Colors.black),
-            elevation: 1,
+            elevation: 0,
           ),
           body: Center(
             child: Column(
